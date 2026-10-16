@@ -1,0 +1,11 @@
+services:
+  agente-a2a:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: agente-a2a
+    env_file:
+      - variables_entorno.env
+    ports:
+      - "9999:9999"
+    restart: unless-stopped
