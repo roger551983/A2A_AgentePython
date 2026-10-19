@@ -7,5 +7,14 @@ services:
     env_file:
       - variables_entorno.env
     ports:
-      - "9999:9999"
+      - "8001:8001"
+    command:
+      - python
+      - -m
+      - uvicorn
+      - agente_ejecutor:app
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8001"
     restart: unless-stopped

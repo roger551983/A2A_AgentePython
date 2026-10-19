@@ -42,8 +42,6 @@ SKILL_DEFINITIONS = [
             },
             "required": [
                 "request",
-                "geoCoordinates",
-                "temperature",
             ],
         },
     },
