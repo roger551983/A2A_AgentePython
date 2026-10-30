@@ -429,6 +429,11 @@ AGENT_CARD = AgentCard(
     capabilities=AgentCapabilities(streaming=True),
     supported_interfaces=[
         AgentInterface(
+        protocol_binding="JSONRPC",
+        protocol_version="0.3",
+        url=f"{PUBLIC_BASE_URL}{RPC_PATH}",
+    ),
+        AgentInterface(
             protocol_binding="JSONRPC",
             protocol_version="1.0",
             url=f"{PUBLIC_BASE_URL}{RPC_PATH}",
@@ -463,6 +468,7 @@ routes = [
 ]
 routes.extend(create_agent_card_routes(AGENT_CARD, card_url=CARD_PATH))
 routes.extend(create_jsonrpc_routes(request_handler, rpc_url=RPC_PATH))
+routes.extend(create_jsonrpc_routes(request_handler,rpc_url=RPC_PATH,enable_v0_3_compat=True))
 routes.extend(create_agent_card_routes(AGENT_CARD,card_url="/a2a/.well-known/agent-card.json"))
 app = Starlette(routes=routes)
 
