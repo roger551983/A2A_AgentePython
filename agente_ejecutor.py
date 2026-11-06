@@ -432,12 +432,7 @@ AGENT_CARD = AgentCard(
         protocol_binding="JSONRPC",
         protocol_version="0.3",
         url=f"{PUBLIC_BASE_URL}{RPC_PATH}",
-    ),
-        AgentInterface(
-            protocol_binding="JSONRPC",
-            protocol_version="1.0",
-            url=f"{PUBLIC_BASE_URL}{RPC_PATH}",
-        )
+    )
     ],
     skills=AGENT_SKILLS,
 )
@@ -466,10 +461,23 @@ routes = [
     Route("/health", health, methods=["GET"]),
     Route(EXECUTE_PATH, ejecutar_toolcall, methods=["POST"]),
 ]
-routes.extend(create_agent_card_routes(AGENT_CARD, card_url=CARD_PATH))
-routes.extend(create_jsonrpc_routes(request_handler, rpc_url=RPC_PATH))
-routes.extend(create_jsonrpc_routes(request_handler,rpc_url=RPC_PATH,enable_v0_3_compat=True))
-routes.extend(create_agent_card_routes(AGENT_CARD,card_url="/a2a/.well-known/agent-card.json"))
+# Publicación del Agent Card
+routes.extend(
+    create_agent_card_routes(
+        AGENT_CARD,
+        card_url=CARD_PATH
+    )
+)
+
+# Endpoint JSON-RPC con compatibilidad A2A 0.3
+routes.extend(
+    create_jsonrpc_routes(
+        request_handler,
+        rpc_url=RPC_PATH,
+        enable_v0_3_compat=True
+    )
+)
+
 app = Starlette(routes=routes)
 
 
